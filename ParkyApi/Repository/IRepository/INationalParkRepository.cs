@@ -10,7 +10,7 @@ namespace ParkyApi.Repository.IRepository
     {
         ICollection<NationalPark> GetNationalParks();
         NationalPark GetNationalPark(int nationalParkId);
-        bool NationalParkExists(NationalPark nationalPark);
+        bool NationalParkExists(string name);
         bool NationalParkExists(int id);
         bool CreateNationalPark(NationalPark nationalPark);
         bool UpdateNationalPark(NationalPark nationalPark);
