@@ -23,6 +23,7 @@ namespace ParkyApi.Controllers
             _mapper = mapper;
         }
 
+        [HttpGet]
         public IActionResult GetNationalParks()
         {
             var objList = _npRepo.GetNationalParks();
@@ -36,5 +37,20 @@ namespace ParkyApi.Controllers
 
             return Ok(objDtoList);
         }
+
+        [HttpGet("{nationalParkId:int}")]
+        public IActionResult GetNationalPark( int nationalParkId)
+        {
+            var obj = _npRepo.GetNationalPark(nationalParkId);
+            if(obj == null)
+            {
+                return NotFound();
+            }
+
+            var objDto = _mapper.Map<NationalParkDto>(obj);
+
+            return Ok(objDto);
+        }
+
     }
 }
