@@ -45,7 +45,19 @@ namespace ParkyApi
                 options.SwaggerDoc("ParkyOpenAPISpec", new Microsoft.OpenApi.Models.OpenApiInfo()
                 {
                     Title = "Parky APi",
-                    Version = "1"
+                    Version = "1",
+                    Description = "Parky Api for National Park",
+                    Contact = new Microsoft.OpenApi.Models.OpenApiContact()
+                    {
+                        Email= "zakaria.bijoy@live.com",
+                        Name = "Md Zakaria Masud",
+                        Url= new Uri("https://github.com/zakariabijoy")
+                    },
+                    License = new Microsoft.OpenApi.Models.OpenApiLicense()
+                    {
+                        Name= "MIT License",
+                        Url = new Uri("https://en.wikipedia.org/wiki/MIT_License")
+                    }
                 });
 
                 var xmlCommentFile = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
