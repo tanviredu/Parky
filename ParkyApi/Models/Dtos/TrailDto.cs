@@ -19,6 +19,6 @@ namespace ParkyApi.Models.Dtos
         [Required]
         public int NationalParkId { get; set; }
 
-        public NationalParkDto NationalParkDto { get; set; }
+        public NationalParkDto NationalPark { get; set; }
     }
 }
