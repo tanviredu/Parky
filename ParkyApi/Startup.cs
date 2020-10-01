@@ -15,6 +15,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using ParkyApi.Data;
+using ParkyApi.Models;
 using ParkyApi.ParkyMapper;
 using ParkyApi.Repository;
 using ParkyApi.Repository.IRepository;
@@ -39,6 +40,7 @@ namespace ParkyApi
         {
             services.AddDbContext<ApplicationDbContext>(options => options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
             services.AddScoped<INationalParkRepository, NationalParkRepository>();
+            services.AddScoped<ITrailRepository, TrailRepository>();
             services.AddAutoMapper(typeof(ParkyMappings));
             services.AddSwaggerGen(options =>
             {
