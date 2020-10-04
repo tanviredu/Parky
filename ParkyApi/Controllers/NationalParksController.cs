@@ -98,7 +98,7 @@ namespace ParkyApi.Controllers
                 return StatusCode(500, ModelState);
             }
 
-            return CreatedAtRoute("GetNationalPark", new { nationalParkId = obj.Id}, obj);
+            return CreatedAtRoute("GetNationalPark", new { version =HttpContext.GetRequestedApiVersion().ToString(), nationalParkId = obj.Id}, obj);
         }
 
         [HttpPatch("{nationalParkId:int}", Name = "UpdateNationalPark")]

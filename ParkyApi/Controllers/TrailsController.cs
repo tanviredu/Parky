@@ -98,7 +98,7 @@ namespace ParkyApi.Controllers
                 return StatusCode(500, ModelState);
             }
 
-            return CreatedAtRoute("GetTrail", new { trailId = obj.Id}, obj);
+            return CreatedAtRoute("GetTrail", new { version = HttpContext.GetRequestedApiVersion().ToString(), trailId = obj.Id}, obj);
         }
 
         [HttpPatch("{trailId:int}", Name = "UpdateTrail")]
