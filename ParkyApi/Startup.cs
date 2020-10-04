@@ -9,20 +9,19 @@ using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Abstractions;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.Options;
 using ParkyApi.Data;
 using ParkyApi.Models;
 using ParkyApi.ParkyMapper;
 using ParkyApi.Repository;
 using ParkyApi.Repository.IRepository;
-
-
-
-
+using Swashbuckle.AspNetCore.SwaggerGen;
 
 namespace ParkyApi
 {
@@ -48,55 +47,58 @@ namespace ParkyApi
                 options.DefaultApiVersion = new ApiVersion(1, 0);
                 options.ReportApiVersions = true;
             });
+            services.AddVersionedApiExplorer(options => options.GroupNameFormat = "'v'VVV");
+            services.AddTransient<IConfigureOptions<SwaggerGenOptions>, ConfigureSwaggerOptions>();
+            services.AddSwaggerGen();
 
-            services.AddSwaggerGen(options =>
-            {
-                options.SwaggerDoc("ParkyOpenAPISpec", new Microsoft.OpenApi.Models.OpenApiInfo()
-                {
-                    Title = "Parky APi ",
-                    Version = "1",
-                    Description = "Parky Api",
-                    Contact = new Microsoft.OpenApi.Models.OpenApiContact()
-                    {
-                        Email= "zakaria.bijoy@live.com",
-                        Name = "Md Zakaria Masud",
-                        Url= new Uri("https://github.com/zakariabijoy")
-                    },
-                    License = new Microsoft.OpenApi.Models.OpenApiLicense()
-                    {
-                        Name= "MIT License",
-                        Url = new Uri("https://en.wikipedia.org/wiki/MIT_License")
-                    }
-                });
+            //services.AddSwaggerGen(options =>
+            //{
+            //    options.SwaggerDoc("ParkyOpenAPISpec", new Microsoft.OpenApi.Models.OpenApiInfo()
+            //    {
+            //        Title = "Parky APi ",
+            //        Version = "1",
+            //        Description = "Parky Api",
+            //        Contact = new Microsoft.OpenApi.Models.OpenApiContact()
+            //        {
+            //            Email= "zakaria.bijoy@live.com",
+            //            Name = "Md Zakaria Masud",
+            //            Url= new Uri("https://github.com/zakariabijoy")
+            //        },
+            //        License = new Microsoft.OpenApi.Models.OpenApiLicense()
+            //        {
+            //            Name= "MIT License",
+            //            Url = new Uri("https://en.wikipedia.org/wiki/MIT_License")
+            //        }
+            //    });
 
-                //options.SwaggerDoc("ParkyOpenAPISpecTrails", new Microsoft.OpenApi.Models.OpenApiInfo()
-                //{
-                //    Title = "Parky APi",
-                //    Version = "1",
-                //    Description = "Parky Api for Trails",
-                //    Contact = new Microsoft.OpenApi.Models.OpenApiContact()
-                //    {
-                //        Email = "zakaria.bijoy@live.com",
-                //        Name = "Md Zakaria Masud",
-                //        Url = new Uri("https://github.com/zakariabijoy")
-                //    },
-                //    License = new Microsoft.OpenApi.Models.OpenApiLicense()
-                //    {
-                //        Name = "MIT License",
-                //        Url = new Uri("https://en.wikipedia.org/wiki/MIT_License")
-                //    }
-                //});
+            //    //options.SwaggerDoc("ParkyOpenAPISpecTrails", new Microsoft.OpenApi.Models.OpenApiInfo()
+            //    //{
+            //    //    Title = "Parky APi",
+            //    //    Version = "1",
+            //    //    Description = "Parky Api for Trails",
+            //    //    Contact = new Microsoft.OpenApi.Models.OpenApiContact()
+            //    //    {
+            //    //        Email = "zakaria.bijoy@live.com",
+            //    //        Name = "Md Zakaria Masud",
+            //    //        Url = new Uri("https://github.com/zakariabijoy")
+            //    //    },
+            //    //    License = new Microsoft.OpenApi.Models.OpenApiLicense()
+            //    //    {
+            //    //        Name = "MIT License",
+            //    //        Url = new Uri("https://en.wikipedia.org/wiki/MIT_License")
+            //    //    }
+            //    //});
 
-                var xmlCommentFile = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
-                var cmlCommentsFullPath = Path.Combine(AppContext.BaseDirectory, xmlCommentFile);
-                options.IncludeXmlComments(cmlCommentsFullPath);
-            });
+            //    var xmlCommentFile = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
+            //    var cmlCommentsFullPath = Path.Combine(AppContext.BaseDirectory, xmlCommentFile);
+            //    options.IncludeXmlComments(cmlCommentsFullPath);
+            //});
             services.AddControllers();
             
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
+        public void Configure(IApplicationBuilder app, IWebHostEnvironment env, IActionDescriptorProvider provider)
         {
             if (env.IsDevelopment())
             {
