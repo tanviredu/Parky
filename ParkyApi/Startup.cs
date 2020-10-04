@@ -44,9 +44,9 @@ namespace ParkyApi
             services.AddAutoMapper(typeof(ParkyMappings));
             services.AddSwaggerGen(options =>
             {
-                options.SwaggerDoc("ParkyOpenAPISpec", new Microsoft.OpenApi.Models.OpenApiInfo()
+                options.SwaggerDoc("ParkyOpenAPISpecNP", new Microsoft.OpenApi.Models.OpenApiInfo()
                 {
-                    Title = "Parky APi",
+                    Title = "Parky APi (National Park)",
                     Version = "1",
                     Description = "Parky Api for National Park",
                     Contact = new Microsoft.OpenApi.Models.OpenApiContact()
@@ -58,6 +58,24 @@ namespace ParkyApi
                     License = new Microsoft.OpenApi.Models.OpenApiLicense()
                     {
                         Name= "MIT License",
+                        Url = new Uri("https://en.wikipedia.org/wiki/MIT_License")
+                    }
+                });
+
+                options.SwaggerDoc("ParkyOpenAPISpecTrails", new Microsoft.OpenApi.Models.OpenApiInfo()
+                {
+                    Title = "Parky APi",
+                    Version = "1",
+                    Description = "Parky Api for Trails",
+                    Contact = new Microsoft.OpenApi.Models.OpenApiContact()
+                    {
+                        Email = "zakaria.bijoy@live.com",
+                        Name = "Md Zakaria Masud",
+                        Url = new Uri("https://github.com/zakariabijoy")
+                    },
+                    License = new Microsoft.OpenApi.Models.OpenApiLicense()
+                    {
+                        Name = "MIT License",
                         Url = new Uri("https://en.wikipedia.org/wiki/MIT_License")
                     }
                 });
@@ -82,7 +100,8 @@ namespace ParkyApi
             app.UseSwagger();
             app.UseSwaggerUI(options =>
             {
-                options.SwaggerEndpoint("/swagger/ParkyOpenAPISpec/swagger.json", "Parky API");
+                options.SwaggerEndpoint("/swagger/ParkyOpenAPISpecNP/swagger.json", "Parky API NP");
+                options.SwaggerEndpoint("/swagger/ParkyOpenAPISpecTrails/swagger.json", "Parky API Trails");
                 options.RoutePrefix = "";
 
             });
