@@ -11,7 +11,8 @@ using ParkyApi.Repository.IRepository;
 
 namespace ParkyApi.Controllers
 {
-    [Route("api/[controller]")]
+    //[Route("api/[controller]")]
+    [Route("api/v{version:apiVersion}/nationalparks")]
     [ApiController]
     //[ApiExplorerSettings(GroupName = "ParkyOpenAPISpecNP")]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
