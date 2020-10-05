@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace ParkyWeb.Repository.IRepository
 {
-    interface INationalparkRepository : IRepository<NationalPark>
+    public interface INationalparkRepository : IRepository<NationalPark>
     {
     }
 }
