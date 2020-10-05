@@ -1,16 +1,45 @@
-﻿using ParkyWeb.Repository.IRepository;
+﻿using Newtonsoft.Json;
+using ParkyWeb.Repository.IRepository;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
+using System.Net.Http;
+using System.Text;
 using System.Threading.Tasks;
 
 namespace ParkyWeb.Repository
 {
     public class Repository<T> : IRepository<T> where T : class
     {
-        public Task<bool> CreateAsync(string url, T objToCreate)
+        private readonly IHttpClientFactory _httpClientFactory;
+
+        public Repository(IHttpClientFactory httpClientFactory)
         {
-            throw new NotImplementedException();
+            _httpClientFactory = httpClientFactory;
+        }
+        public async Task<bool> CreateAsync(string url, T objToCreate)
+        {
+            var request = new HttpRequestMessage(HttpMethod.Post, url);
+            if (objToCreate !=null)
+            {
+                request.Content = new StringContent(JsonConvert.SerializeObject(objToCreate), Encoding.UTF8, "application/json");
+            }
+            else
+            {
+                return false;
+            }
+
+            var client = _httpClientFactory.CreateClient();
+            HttpResponseMessage response = await client.SendAsync(request);
+            if(response.StatusCode == HttpStatusCode.Created)
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
         }
 
         public Task<bool> DeleteAsync(string url, int id)
