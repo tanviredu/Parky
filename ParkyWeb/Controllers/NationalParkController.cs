@@ -26,7 +26,7 @@ namespace ParkyWeb.Controllers
             NationalPark obj = new NationalPark();
             if(id == null)
             {
-                return View();
+                return View(obj);
             }
 
             obj = await _npRepo.GetAsync(SD.NationalParkApiPath, id.GetValueOrDefault());
