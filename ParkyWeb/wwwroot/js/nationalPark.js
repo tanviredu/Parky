@@ -30,3 +30,28 @@ function loadDataTable() {
         ]
     });
 } 
+
+function Delete(url) {
+    swal({
+        title: "Are you sure you want to Delete",
+        text: "You will not to able to restore the data!",
+        icon: "warning",
+        buttons: ["Cancel", "Ok"],
+        dangerMode: true
+    }).then((willDelete) => {
+        if (willDelete) {
+            $.ajax({
+                type: 'Delete',
+                url: url,
+                success: function (data) {
+                    if (data.success) {
+                        toastr.success(data.message);
+                        dataTable.ajax.reload();
+                    } else {
+                        toastr.erroe(data.message);
+                    }
+                }
+            });
+        }
+    });
+}
