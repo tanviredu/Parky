@@ -33,6 +33,8 @@ function loadDataTable() {
     });
 } 
 
+// trail delete function
+
 function Delete(url) {
     swal({
         title: "Are you sure you want to Delete",
