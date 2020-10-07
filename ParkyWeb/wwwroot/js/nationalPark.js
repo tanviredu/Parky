@@ -48,7 +48,7 @@ function Delete(url) {
                         toastr.success(data.message);
                         dataTable.ajax.reload();
                     } else {
-                        toastr.erroe(data.message);
+                        toastr.error(data.message);
                     }
                 }
             });
