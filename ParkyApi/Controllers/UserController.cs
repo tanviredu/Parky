@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using ParkyApi.Models;
+using ParkyApi.Models.Dtos;
 using ParkyApi.Repository.IRepository;
 
 namespace ParkyApi.Controllers
@@ -24,7 +25,7 @@ namespace ParkyApi.Controllers
 
         [AllowAnonymous]
         [HttpPost("authenticate")]
-        public IActionResult Authenticate([FromBody] User model)
+        public IActionResult Authenticate([FromBody] AuthenticationDto model)
         {
             var user = _userRepo.Authenticate(model.UserName, model.Password);
             if(user == null)
@@ -37,7 +38,7 @@ namespace ParkyApi.Controllers
 
         [AllowAnonymous]
         [HttpPost("register")]
-        public IActionResult Register([FromBody] User model)
+        public IActionResult Register([FromBody] RegisterDto model)
         {
             var isUserNameUnique = _userRepo.IsUniqeUser(model.UserName);
             if (!isUserNameUnique)
