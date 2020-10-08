@@ -45,7 +45,7 @@ namespace ParkyApi.Controllers
                 return BadRequest(new { message = "UserName is already exists" });
             }
 
-            var user = _userRepo.Register(model.UserName, model.Password);
+            var user = _userRepo.Register(model.UserName, model.Password, model.Role);
 
             if(user == null)
             {

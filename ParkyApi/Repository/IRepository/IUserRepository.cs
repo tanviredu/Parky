@@ -10,6 +10,6 @@ namespace ParkyApi.Repository.IRepository
     {
         bool IsUniqeUser(string userName);
         User Authenticate(string userName, string password);
-        User Register(string userName, string password);
+        User Register(string userName, string password, string role);
     }
 }
