@@ -30,7 +30,7 @@ namespace ParkyApi.Repository
             var user = _db.Users.SingleOrDefault(u => u.UserName == userName && u.Password == password);
 
             //user is not found
-            if(user == null)
+            if (user == null)
             {
                 return null;
             }
@@ -57,12 +57,26 @@ namespace ParkyApi.Repository
 
         public bool IsUniqeUser(string userName)
         {
-            throw new NotImplementedException();
+            var user = _db.Users.SingleOrDefault(u => u.UserName == userName);
+            if (user == null)
+                return true;
+
+            return false;
         }
 
         public User Register(string userName, string password)
         {
-            throw new NotImplementedException();
+            User user = new User
+            {
+               UserName = userName,
+               Password = password
+            };
+
+            _db.Users.Add(user);
+            _db.SaveChanges();
+            
+            user.Password = "";
+            return user;
         }
     }
 }
