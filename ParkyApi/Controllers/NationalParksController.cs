@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using AutoMapper;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using ParkyApi.Models;
@@ -58,6 +59,7 @@ namespace ParkyApi.Controllers
         [ProducesResponseType(200, Type = typeof(NationalParkDto))]
         [ProducesResponseType(404)]
         [ProducesDefaultResponseType]
+        [Authorize]
         public IActionResult GetNationalPark( int nationalParkId)
         {
             var obj = _npRepo.GetNationalPark(nationalParkId);
