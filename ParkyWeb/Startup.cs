@@ -29,6 +29,13 @@ namespace ParkyWeb
             services.AddHttpClient();
             services.AddScoped<INationalparkRepository, NationalparkRepository>();
             services.AddScoped<ITrailRepository, TrailRepository>();
+            services.AddScoped<IAccountRepository, AccountRepository>();
+            services.AddSession(options =>
+            {
+                options.IdleTimeout = TimeSpan.FromMinutes(10);
+                options.Cookie.HttpOnly = true;
+                options.Cookie.IsEssential = true;
+            });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -48,7 +55,14 @@ namespace ParkyWeb
             app.UseStaticFiles();
 
             app.UseRouting();
+            app.UseCors(c => c
+            .AllowAnyOrigin()
+            .AllowAnyMethod()
+            .AllowAnyHeader());
 
+            app.UseSession();
+
+            app.UseAuthentication();
             app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>
