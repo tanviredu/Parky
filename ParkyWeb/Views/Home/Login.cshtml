@@ -1,0 +1,20 @@
+﻿@model ParkyWeb.Models.User
+@{
+    ViewData["Title"] = "Login";
+}
+
+<form method="post">
+    <fieldset>
+        <legend>Login</legend>
+        <div class="form-group">
+            <label asp-for="UserName">UserName</label>
+            <input asp-for="UserName" type="text" class="form-control"  placeholder="Enter UserName">
+        </div>
+        <div class="form-group">
+            <label asp-for="Password">Password</label>
+            <input asp-for="Password" type="password" class="form-control"  placeholder="Password">
+        </div>
+        <button type="submit" class="btn btn-primary">Login</button>
+    </fieldset>
+</form>
+
