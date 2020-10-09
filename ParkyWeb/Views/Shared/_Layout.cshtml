@@ -63,6 +63,13 @@ httpAcc.HttpContext.Session.GetString("JWT").ToString().Length > 0 && User.Ident
     </header>
     <div class="container">
         <main role="main" class="pb-3">
+            @if(TempData["alert"] != null)
+            {
+            <div class="alert alert-dismissible alert-danger">
+                <button type="button" class="close" data-dismiss="alert">&times;</button>
+                @TempData["alert"]
+            </div>
+            }
             @RenderBody()
         </main>
     </div>

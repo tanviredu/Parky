@@ -62,7 +62,7 @@ namespace ParkyWeb.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Login(User user)
         {
-            User obj = await _accRepo.LoginAsync(SD.AccountApiPath + "authenticate", user);
+            User obj = await _accRepo.LoginAsync(SD.AccountApiPath + "authenticate/", user);
 
             if(obj.Token == null)
             {
@@ -71,12 +71,15 @@ namespace ParkyWeb.Controllers
 
             var identity = new ClaimsIdentity(CookieAuthenticationDefaults.AuthenticationScheme);
             identity.AddClaim(new Claim(ClaimTypes.Name, obj.UserName));
-            identity.AddClaim(new Claim(ClaimTypes.Role, obj.Role));
+            if(obj.Role != null)
+            {
+                identity.AddClaim(new Claim(ClaimTypes.Role, obj.Role));
+            }
             var principal = new ClaimsPrincipal(identity);
             await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, principal);
 
             HttpContext.Session.SetString("JWT", obj.Token);
-
+            TempData["alert"] = "Welcome " + obj.UserName;
             return RedirectToAction("Index");
         }
 
@@ -96,8 +99,8 @@ namespace ParkyWeb.Controllers
             {
                 return View();
             }
-            
 
+            TempData["alert"] = "Registration Successful";
             return RedirectToAction("Login");
         }
 
