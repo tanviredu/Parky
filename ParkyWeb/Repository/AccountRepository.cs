@@ -44,7 +44,7 @@ namespace ParkyWeb.Repository
             }
         }
 
-        public async Task<bool> Register(string url, User user)
+        public async Task<bool> RegisterAsync(string url, User user)
         {
             var request = new HttpRequestMessage(HttpMethod.Post, url);
             if (user != null)
