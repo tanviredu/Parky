@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.VisualBasic;
@@ -11,6 +12,7 @@ using ParkyWeb.Repository.IRepository;
 
 namespace ParkyWeb.Controllers
 {
+    [Authorize]
     public class NationalParkController : Controller
     {
         private readonly INationalparkRepository _npRepo;
@@ -24,6 +26,7 @@ namespace ParkyWeb.Controllers
             return View(new NationalPark() { });
         }
 
+        [Authorize(Roles ="Admin")]
         public async Task<IActionResult> Upsert(int? id)
         {
             NationalPark obj = new NationalPark();
@@ -43,6 +46,7 @@ namespace ParkyWeb.Controllers
         }
 
         [HttpPost]
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> Upsert(NationalPark obj)
         {
             if (ModelState.IsValid)
@@ -92,6 +96,7 @@ namespace ParkyWeb.Controllers
         }
 
         [HttpDelete]
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> Delete(int id)
         {
             var status = await _npRepo.DeleteAsync(SD.NationalParkApiPath, id, HttpContext.Session.GetString("JWT"));
